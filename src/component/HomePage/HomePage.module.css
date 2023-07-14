@@ -30,7 +30,7 @@
 .status {
     display: flex;
     justify-content: space-between;
-    margin-left: 60px;
+    margin-left: 35px;
 }
 .status h1{
     font-size: 25px;
