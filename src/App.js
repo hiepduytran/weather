@@ -1,11 +1,11 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchWeather } from './redux/action/Fetching';
+import { fetchWeather } from './redux/actions/Fetching';
 import { Route, Routes } from 'react-router-dom';
-import HomeChart from './component/HomePage/HomeChart';
-import HomeDay from './component/HomePage/HomeDay';
-import HomePage from './component/HomePage/HomePage';
-import SubPage from './component/Detail/SubPage';
+import HomeChart from './components/HomePage/HomeChart';
+import HomeDay from './components/HomePage/HomeDay';
+import HomePage from './components/HomePage/HomePage';
+import SubPage from './components/Detail/SubPage';
 import styles from './App.module.css';
 function App() {
   const dispatch = useDispatch();

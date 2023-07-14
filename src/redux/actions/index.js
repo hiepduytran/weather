@@ -1,4 +1,4 @@
-import * as Types from "../contains";
+import * as Types from "../constants";
 
 export const fetchDataRequest = () => ({
   type: Types.FETCH_DATA_REQUEST,

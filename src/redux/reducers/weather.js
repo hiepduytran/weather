@@ -1,4 +1,4 @@
-import * as types from '../contains';
+import * as types from '../constants';
 
 const initialState = {
   weather: null,
