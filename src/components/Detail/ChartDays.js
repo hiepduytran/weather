@@ -1,9 +1,9 @@
 import styles from './ChartDays.module.css';
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart, Title, CategoryScale, LinearScale, PointElement, LineElement, Filler, Legend, Tooltip } from 'chart.js';
+import { Chart, Title, CategoryScale, LinearScale, PointElement, LineElement, Filler, Legend, Tooltip as TooltipPlugin } from 'chart.js';
 
-Chart.register(Title, CategoryScale, LinearScale, PointElement, LineElement, Filler, Legend, Tooltip);
+Chart.register(Title, CategoryScale, LinearScale, PointElement, LineElement, Filler, Legend, TooltipPlugin);
 
 export default function ChartDay(props) {
   const [time, setTime] = useState([]);
@@ -53,6 +53,12 @@ export default function ChartDay(props) {
           display: false,
         },
         stacked: true,
+        title: {
+          display: true,
+          text: selectedOption === 'Temperature' ? 'Temperature (°C)' :
+            selectedOption === 'UV' ? 'UV Index' :
+              'Humidity (%)', 
+        },
       },
     },
     plugins: {
@@ -64,6 +70,27 @@ export default function ChartDay(props) {
       },
       tooltip: {
         enabled: true,
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          label: function (context) {
+            let label = context.dataset.label || '';
+
+            if (label) {
+              label += ': ';
+            }
+
+            if (selectedOption === 'Temperature') {
+              label += context.parsed.y + '°C';
+            } else if (selectedOption === 'UV') {
+              label += context.parsed.y + ' UV';
+            } else if (selectedOption === 'Humidity') {
+              label += context.parsed.y + '%';
+            }
+
+            return label;
+          }
+        }
       },
     },
   };
@@ -149,7 +176,7 @@ export default function ChartDay(props) {
         </label>
       </div>
       <div className="chart-container" style={{ maxWidth: "800px", maxHeight: "800px", margin: "0 auto" }}>
-        <Line options={options} data={data} />
+        <Line options={options} data={data} plugins={[TooltipPlugin]} />
       </div>
     </>
   );

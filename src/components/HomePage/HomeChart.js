@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { AreaChart, Area, XAxis, YAxis } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 
 const Chart = () => {
   const weather = useSelector((state) => state.weather.weather.forecast.forecastday);
@@ -17,13 +17,10 @@ const Chart = () => {
   }));
 
   return (
-    <AreaChart
-      width={500}
-      height={200}
-      data={data}
-    >
+    <AreaChart width={500} height={200} data={data}>
       <XAxis dataKey="name" />
       <YAxis />
+      <Tooltip formatter={(value) => `${value} °C`} />
       <Area type="monotone" dataKey="Temperature" stroke="red" fill="orange" />
     </AreaChart>
   );
