@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './HomePage.module.css';
+import { useDispatch } from 'react-redux';
+import { fetchWeather } from '../../redux/action/Fetching';
 
 export default function HomePage() {
-  const weather = useSelector(state => state.weather.weather);
+  const weather = useSelector((state) => state.weather.weather);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [city, setCity] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,11 +29,21 @@ export default function HomePage() {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
+  const dispatch = useDispatch();
+  const handleInput = (e) => {
+    if (e.key === 'Enter') {
+      setCity(e.target.value);
+      dispatch(fetchWeather(e.target.value));
+    } else {
+      setCity(e.target.value);
+    }
+  };
+
   return (
     <>
       <div className={styles.inputContainer}>
         Your city:
-        <input/>
+        <input value={city} onChange={handleInput} onKeyDown={handleInput} />
       </div>
       <h1 className={styles.titleTime}>{formatDateTime(currentDateTime)}</h1>
       <div className={styles.temp}>

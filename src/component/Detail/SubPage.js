@@ -6,6 +6,7 @@ import ChartDay from './ChartDays';
 import SliderDays from './SliderDays';
 
 export default function Day() {
+  const weather = useSelector(state => state.weather.weather);
   const weatherDay = useSelector(state => state.weather.weather.forecast.forecastday);
   const navigate = useNavigate();
   const { epoch } = useParams();
@@ -15,6 +16,7 @@ export default function Day() {
     const filteredWeather = weatherDay.filter(weather => weather.date_epoch === Number(epoch));
     setSelectedWeatherDay(filteredWeather[0]);
   }, [epoch, weatherDay]);
+  
 
   const handleBack = () => {
     navigate('/');
@@ -43,7 +45,7 @@ export default function Day() {
               style={{
                 paddingTop: "30px",
               }}
-            >Ha Noi - Viet Nam</h1>
+            >{weather?.location?.name === "Hanoi" ? "Ha Noi" : weather?.location?.name}</h1>
             <h2>{selectedWeatherDay.date}</h2>
             <ChartDay weatherDay={selectedWeatherDay} />
             <SliderDays />
